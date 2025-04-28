@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Nous contacter - everUP</title>
     <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/chat.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 </head>
@@ -39,63 +40,136 @@
         </div>
     </section>
 
-    <!-- Section Contact -->
-    <section class="contact-section">
+    <!-- Section Calendrier -->
+    <section class="calendar-section">
         <div class="container">
-            <h2 class="section-title">Contactez-nous</h2>
-            <p class="section-subtitle">Nous sommes à votre écoute</p>
+            <h2 class="section-title">Réservez un rendez-vous</h2>
+            <p class="section-subtitle">Sélectionnez une date pour prendre rendez-vous</p>
             
-            <div class="contact-container">
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <i class="fas fa-map-marker-alt"></i>
-                        <div>
-                            <h4>Adresse</h4>
-                            <p>123 Rue de l'Innovation<br>75001 Paris, France</p>
-                        </div>
+            <div class="calendar-container">
+                <div id="custom-calendar" class="custom-calendar">
+                    <div class="calendar-header">
+                        <button id="prev-month" class="calendar-nav-btn"><i class="fas fa-chevron-left"></i></button>
+                        <h3 id="month-year">Avril 2025</h3>
+                        <button id="next-month" class="calendar-nav-btn"><i class="fas fa-chevron-right"></i></button>
                     </div>
-                    
-                    <div class="contact-item">
-                        <i class="fas fa-phone-alt"></i>
-                        <div>
-                            <h4>Téléphone</h4>
-                            <p>+33 1 23 45 67 89</p>
-                        </div>
+                    <div class="calendar-weekdays">
+                        <div>Lun</div>
+                        <div>Mar</div>
+                        <div>Mer</div>
+                        <div>Jeu</div>
+                        <div>Ven</div>
+                        <div>Sam</div>
+                        <div>Dim</div>
                     </div>
-                    
-                    <div class="contact-item">
-                        <i class="fas fa-envelope"></i>
-                        <div>
-                            <h4>Email</h4>
-                            <p>contact@everup.com</p>
-                        </div>
+                    <div id="calendar-days" class="calendar-days">
+                        <!-- Les jours seront générés par JavaScript -->
                     </div>
-                </div>
-                
-                <div class="contact-form">
-                    <form id="contact-form">
-                        <div class="form-group">
-                            <label for="name">Nom</label>
-                            <input type="text" id="name" name="name" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="email">Email</label>
-                            <input type="email" id="email" name="email" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="subject">Sujet</label>
-                            <input type="text" id="subject" name="subject" required>
-                        </div>
-                        <div class="form-group">
-                            <label for="message">Message</label>
-                            <textarea id="message" name="message" rows="5" required></textarea>
-                        </div>
-                        <button type="submit" class="btn btn-primary">Envoyer</button>
-                    </form>
                 </div>
             </div>
         </div>
     </section>
+    
+    <!-- Script pour le calendrier personnalisé -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const calendarDays = document.getElementById('calendar-days');
+            const monthYear = document.getElementById('month-year');
+            const prevMonthBtn = document.getElementById('prev-month');
+            const nextMonthBtn = document.getElementById('next-month');
+            
+            let currentDate = new Date();
+            let currentMonth = currentDate.getMonth();
+            let currentYear = currentDate.getFullYear();
+            
+            // Noms des mois en français
+            const monthNames = ['Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin', 'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre'];
+            
+            // Générer le calendrier
+            function generateCalendar(month, year) {
+                // Vider le conteneur des jours
+                calendarDays.innerHTML = '';
+                
+                // Mettre à jour le titre du mois et de l'année
+                monthYear.textContent = `${monthNames[month]} ${year}`;
+                
+                // Premier jour du mois (0 = Dimanche, 1 = Lundi, ...)
+                let firstDay = new Date(year, month, 1).getDay();
+                // Ajuster pour commencer par Lundi
+                firstDay = firstDay === 0 ? 6 : firstDay - 1;
+                
+                // Nombre de jours dans le mois
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+                
+                // Jours du mois précédent pour remplir la première semaine
+                const daysInPrevMonth = new Date(year, month, 0).getDate();
+                
+                // Ajouter les jours du mois précédent
+                for (let i = firstDay - 1; i >= 0; i--) {
+                    const dayElement = document.createElement('div');
+                    dayElement.classList.add('calendar-day', 'prev-month-day');
+                    dayElement.textContent = daysInPrevMonth - i;
+                    calendarDays.appendChild(dayElement);
+                }
+                
+                // Ajouter les jours du mois actuel
+                for (let i = 1; i <= daysInMonth; i++) {
+                    const dayElement = document.createElement('div');
+                    dayElement.classList.add('calendar-day', 'current-month-day');
+                    dayElement.textContent = i;
+                    
+                    // Vérifier si c'est aujourd'hui
+                    if (year === currentDate.getFullYear() && month === currentDate.getMonth() && i === currentDate.getDate()) {
+                        dayElement.classList.add('today');
+                    }
+                    
+                    // Ajouter un événement de clic pour rediriger vers Calendly
+                    dayElement.addEventListener('click', function() {
+                        const selectedDate = new Date(year, month, i);
+                        const formattedDate = `${selectedDate.getFullYear()}-${String(selectedDate.getMonth() + 1).padStart(2, '0')}-${String(selectedDate.getDate()).padStart(2, '0')}`;
+                        window.open(`https://calendly.com/everup/30min?date=${formattedDate}`, '_blank');
+                    });
+                    
+                    calendarDays.appendChild(dayElement);
+                }
+                
+                // Calculer combien de jours du mois suivant sont nécessaires
+                const totalDaysDisplayed = calendarDays.childElementCount;
+                const remainingCells = 42 - totalDaysDisplayed; // 6 semaines x 7 jours = 42
+                
+                // Ajouter les jours du mois suivant
+                for (let i = 1; i <= remainingCells; i++) {
+                    const dayElement = document.createElement('div');
+                    dayElement.classList.add('calendar-day', 'next-month-day');
+                    dayElement.textContent = i;
+                    calendarDays.appendChild(dayElement);
+                }
+            }
+            
+            // Navigation vers le mois précédent
+            prevMonthBtn.addEventListener('click', function() {
+                currentMonth--;
+                if (currentMonth < 0) {
+                    currentMonth = 11;
+                    currentYear--;
+                }
+                generateCalendar(currentMonth, currentYear);
+            });
+            
+            // Navigation vers le mois suivant
+            nextMonthBtn.addEventListener('click', function() {
+                currentMonth++;
+                if (currentMonth > 11) {
+                    currentMonth = 0;
+                    currentYear++;
+                }
+                generateCalendar(currentMonth, currentYear);
+            });
+            
+            // Générer le calendrier initial
+            generateCalendar(currentMonth, currentYear);
+        });
+    </script>
 
     <!-- Footer -->
     <footer class="footer">
@@ -131,5 +205,6 @@
 
     <script src="js/main.js"></script>
     <script src="js/scroll-header.js"></script>
+    <script src="js/chat.js"></script>
 </body>
 </html>
