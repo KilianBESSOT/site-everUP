@@ -847,6 +847,57 @@ img {
     box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.05);
 }
 
+.footer-bleu {
+    background: linear-gradient(135deg, #0f1c3f, #0a0f24);
+    color: var(--light-text);
+    padding: 60px 0 20px;
+    box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.05);
+    gap: 12px;
+}
+
+.footer-bleu h3 {
+    font-size: 22px;
+    color: white;
+    margin-bottom: 15px;
+    font-weight: 600;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+.footer-bleu h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background-color: var(--primary-color);
+}
+
+.footer-bleu .footer-coordonnées p {
+    line-height: 1.6;
+    color: white;
+}
+
+.footer-bleu ul li {
+    color: white;
+}
+
+.footer-bleu ul li a {
+    color: white;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.footer-bleu ul li a:hover {
+    color: var(--primary-color);
+}
+
+.footer-bleu .footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.7);
+}
+
 .footer-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -875,7 +926,7 @@ img {
 
 .footer-coordonnées p {
     line-height: 1.6;
-    color: var(--dark-gray);
+    color: white;
 }
 
 .social-link {
@@ -896,7 +947,7 @@ img {
     transform: translateY(-3px);
 }
 
-.footer ul {
+.footer ul, .footer-bleu ul {
     list-style: none;
     padding: 0;
     margin: 0;
@@ -905,11 +956,11 @@ img {
     gap: 12px;
 }
 
-.footer ul li {
+.footer ul li, .footer-bleu ul li {
     position: relative;
 }
 
-.footer ul li::before {
+.footer ul li::before, .footer-bleu ul li::before {
     position: absolute;
     left: 0;
     color: var(--primary-color);
