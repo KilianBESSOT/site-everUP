@@ -57,7 +57,7 @@
 
 /* En-tête du chat */
 .chat-header {
-    background: linear-gradient(135deg, var(--light-blue), var(--dark-blue));
+    background: linear-gradient(114deg, #070934 19.73%, #151B9A 100.01%);
     color: white;
     padding: 15px;
     display: flex;

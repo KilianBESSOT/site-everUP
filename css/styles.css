@@ -131,8 +131,7 @@ img {
     width: 100%;
     z-index: 1000;
     transition: all 0.4s ease;
-    background: linear-gradient(135deg, #0f1c3f, #0a0f24);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    background: transparent;
 }
 
 .main-header.scrolled {
@@ -197,7 +196,7 @@ img {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(135deg, #0f1c3f, #0a0f24);
+    background: linear-gradient(114deg, #070934 19.73%, #151B9A 100.01%);
     color: white;
     position: relative;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
@@ -251,8 +250,8 @@ img {
 
 .hero-content {
     text-align: center;
-    padding: 175px 0;
-    margin-top: 70px;
+    padding-top: 225px;
+    padding-bottom: 100px;
 }
 
 .hero-content h1 {
@@ -310,7 +309,7 @@ img {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, var(--light-blue), var(--dark-blue));
+    background: linear-gradient(114deg, #070934 19.73%, #151B9A 100.01%);
     border-radius: 50%;
     color: white;
     transition: all 0.3s ease;
@@ -419,7 +418,7 @@ img {
 
 .testimonials-section {
     padding: 80px 0;
-    background: linear-gradient(135deg, #0f1c3f, #0a0f24);
+    background: linear-gradient(114deg, #070934 19.73%, #151B9A 100.01%);
     color: white;
 }
 
@@ -474,7 +473,7 @@ img {
 /* Section CTA */
 .cta-section {
     padding: 80px 0;
-    background: linear-gradient(135deg, var(--light-blue), var(--dark-blue));
+    background: linear-gradient(114deg, #070934 19.73%, #151B9A 100.01%);
     color: var(--light-text);
     text-align: center;
 }
@@ -598,12 +597,18 @@ img {
 
 .calendar-container {
     margin: 40px auto;
-    max-width: 800px;
+    max-width: 1000px;
     background-color: white;
     border-radius: var(--border-radius);
     box-shadow: var(--box-shadow);
     overflow: hidden;
     padding: 20px;
+}
+
+.calendar-wrapper {
+    display: flex;
+    position: relative;
+    min-height: 500px;
 }
 
 .calendar-info {
@@ -628,7 +633,9 @@ img {
 /* Styles pour le calendrier personnalisé */
 .custom-calendar {
     width: 100%;
+    max-width: 100%;
     font-family: 'Poppins', sans-serif;
+    transition: all 0.3s ease;
 }
 
 .calendar-header {
@@ -647,7 +654,7 @@ img {
 }
 
 .calendar-nav-btn {
-    background: linear-gradient(135deg, var(--light-blue), var(--dark-blue));
+    background: linear-gradient(114deg, #070934 19.73%, #151B9A 100.01%);
     color: white;
     border: none;
     width: 40px;
@@ -680,12 +687,17 @@ img {
 .calendar-days {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
-    gap: 5px;
+    gap: 8px;
     text-align: center;
+    padding: 5px;
 }
 
 .calendar-day {
-    height: 50px;
+    aspect-ratio: 1/1;
+    width: 100%;
+    max-width: 50px;
+    height: auto;
+    margin: 0 auto;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -693,6 +705,15 @@ img {
     cursor: pointer;
     transition: all 0.2s ease;
     position: relative;
+}
+
+.calendar-empty-cell {
+    aspect-ratio: 1/1;
+    width: 100%;
+    max-width: 50px;
+    height: auto;
+    margin: 0 auto;
+    visibility: hidden;
 }
 
 .current-month-day {
@@ -704,15 +725,138 @@ img {
     color: #ccc;
 }
 
-.calendar-day:hover {
+.available-day:hover {
     background-color: rgba(255, 127, 0, 0.1);
     color: var(--primary-color);
+    cursor: pointer;
+}
+
+.unavailable-day {
+    color: #ccc;
+    cursor: default;
+    position: relative;
+}
+
+.unavailable-day::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 70%;
+    height: 1px;
+    background-color: #ddd;
+    transform: translate(-50%, -50%) rotate(45deg);
 }
 
 .calendar-day.today {
     background-color: var(--primary-color);
     color: white;
     font-weight: bold;
+}
+
+.calendar-day.selected {
+    background-color: rgba(255, 127, 0, 0.2);
+    color: var(--primary-color);
+    font-weight: bold;
+    border: 2px solid var(--primary-color);
+}
+
+/* Styles pour les créneaux horaires */
+.time-slots {
+    width: 0;
+    overflow: hidden;
+    background-color: white;
+    border-left: 1px solid #eee;
+    transition: all 0.3s ease;
+    opacity: 0;
+    position: relative;
+    flex-shrink: 0;
+    height: 500px;
+}
+
+.time-slots.active {
+    width: 300px;
+    opacity: 1;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.custom-calendar.date-selected {
+    max-width: calc(100% - 300px);
+}
+
+.time-slots-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+}
+
+.time-slots-header h3 {
+    font-size: 18px;
+    color: var(--secondary-color);
+    margin: 0;
+    font-weight: 600;
+}
+
+.close-time-slots {
+    background: none;
+    border: none;
+    color: var(--dark-gray);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 5px;
+    transition: all 0.2s ease;
+}
+
+.close-time-slots:hover {
+    color: var(--primary-color);
+}
+
+.time-slots-content {
+    display: flex;
+    flex-direction: column;
+    height: calc(100% - 60px);
+}
+
+.time-slots-instruction {
+    font-size: 14px;
+    color: var(--dark-gray);
+    margin-bottom: 15px;
+}
+
+.available-slots {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 300px;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+.time-slot {
+    padding: 12px 15px;
+    background-color: rgba(255, 127, 0, 0.1);
+    border-radius: 5px;
+    color: var(--dark-gray);
+    font-size: 15px;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.time-slot:hover {
+    background-color: var(--primary-color);
+    color: white;
+    transform: translateY(-2px);
 }
 
 /* Responsive pour le calendrier */
@@ -722,8 +866,12 @@ img {
         padding: 10px;
     }
     
+    .calendar-wrapper {
+        flex-direction: column;
+    }
+    
     .calendar-day {
-        height: 40px;
+        max-width: 40px;
         font-size: 14px;
     }
     
@@ -734,6 +882,13 @@ img {
     .calendar-nav-btn {
         width: 35px;
         height: 35px;
+    }
+    
+    .time-slots.active {
+        width: 100%;
+        margin-top: 20px;
+        border-left: none;
+        border-top: 1px solid #eee;
     }
 }
 
@@ -779,7 +934,7 @@ img {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(135deg, var(--light-blue), var(--dark-blue));
+    background: linear-gradient(114deg, #070934 19.73%, #151B9A 100.01%);
     border-radius: 50%;
     color: white;
     transition: all 0.3s ease;
@@ -848,7 +1003,7 @@ img {
 }
 
 .footer-bleu {
-    background: linear-gradient(135deg, #0f1c3f, #0a0f24);
+    background: linear-gradient(114deg, #070934 19.73%, #151B9A 100.01%);
     color: var(--light-text);
     padding: 60px 0 20px;
     box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.05);

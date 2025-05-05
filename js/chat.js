@@ -45,14 +45,35 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Variables pour stocker les messages prédéfinis
     const botResponses = {
+        // Informations sur everUP et ses fonctionnalités
         "comment fonctionne everup": "everUP est une plateforme de communication interne qui centralise toutes vos interactions. Elle permet de créer des espaces de discussion, partager des documents, et engager vos collaborateurs autour de vos valeurs d'entreprise.",
+        "fonctionnalités": "everUP propose de nombreuses fonctionnalités : espaces de discussion thématiques, partage de documents, sondages interactifs, reconnaissance entre collègues, tableaux de bord analytiques, et intégration avec vos outils existants.",
+        "avantages": "Les principaux avantages d'everUP sont : centralisation de la communication, réduction des emails internes, amélioration de l'engagement des collaborateurs, et accès à des données analytiques pour mesurer l'impact de vos actions.",
+        
+        // Informations sur les tarifs et offres
         "quels sont vos tarifs": "Nous proposons plusieurs formules adaptées à la taille de votre entreprise. Notre formule de base commence à 9€ par utilisateur et par mois. Pour un devis personnalisé, vous pouvez prendre rendez-vous avec notre équipe commerciale.",
+        "prix": "Nos tarifs sont adaptés à la taille de votre organisation : Formule Startup (jusqu'à 50 utilisateurs) à 9€/utilisateur/mois, Formule Business (jusqu'à 250 utilisateurs) à 7€/utilisateur/mois, et Formule Enterprise (plus de 250 utilisateurs) avec tarif personnalisé.",
+        "offres": "Toutes nos offres incluent la mise en place de la plateforme, la formation des administrateurs, et un support technique. La formule Enterprise inclut également un accompagnement personnalisé et des fonctionnalités avancées d'analyse.",
+        
+        // Informations sur les services et l'entreprise
         "puis-je avoir une démo": "Bien sûr ! Vous pouvez réserver une démo gratuite de 30 minutes avec l'un de nos experts en cliquant sur le bouton 'Réservez une démo' en haut de la page ou en vous rendant sur la page Contact.",
+        "missions": "Nos missions principales sont : l'accompagnement en intelligence artificielle, la gestion de projet agile, et la gouvernance IT. Nous vous aidons à digitaliser vos processus et à optimiser votre communication interne.",
+        "qui êtes-vous": "everUP est une entreprise française spécialisée dans les solutions de communication interne et d'engagement collaborateur. Fondée en 2020, notre mission est de simplifier et d'améliorer les interactions au sein des organisations.",
+        "contact": "Vous pouvez nous contacter par téléphone au 06 25 65 35 27 ou 04 22 46 17 02, par email à contact@everup.com, ou en prenant rendez-vous via notre calendrier sur la page 'Nous Contacter'.",
+        "où êtes-vous": "Nos bureaux sont situés au 300 rue du Vallon, 06560 Valbonne, France. Vous pouvez nous rendre visite sur rendez-vous ou nous contacter par téléphone ou email.",
+        
+        // Salutations et remerciements
         "bonjour": "Bonjour ! Comment puis-je vous aider aujourd'hui ?",
-        "salut": "Salut ! Comment puis-je vous aider aujourd'hui ?",
-        "merci": "Je vous en prie ! Avez-vous d'autres questions ?",
-        "au revoir": "Au revoir ! N'hésitez pas à revenir si vous avez d'autres questions.",
-        "default": "Je n'ai pas toutes les réponses à cette question. Souhaitez-vous être mis en relation avec un conseiller ? Vous pouvez prendre rendez-vous sur notre page Contact."
+        "salut": "Salut ! Je suis l'assistant virtuel d'everUP. Que puis-je faire pour vous ?",
+        "merci": "Je vous en prie ! Avez-vous d'autres questions sur nos services ou notre plateforme ?",
+        "au revoir": "Au revoir ! N'hésitez pas à revenir si vous avez d'autres questions. Bonne journée !",
+        
+        // Réponses par défaut variées pour les questions sans réponse
+        "default": [
+            "Je n'ai pas toutes les réponses à cette question. Souhaitez-vous être mis en relation avec un conseiller ? Vous pouvez prendre rendez-vous sur notre page Contact.",
+            "Cette question nécessite une expertise plus approfondie. Je vous invite à contacter directement notre équipe au 06 25 65 35 27 ou via notre formulaire de contact pour obtenir une réponse personnalisée.",
+            "Je ne peux pas répondre précisément à cette question. Pour une information complète et adaptée à votre situation, pourquoi ne pas réserver une démo gratuite avec l'un de nos experts ?"
+        ]
     };
     
     // Fonction pour ajouter un message à la conversation
@@ -83,13 +104,18 @@ document.addEventListener('DOMContentLoaded', function() {
         
         // Chercher une correspondance dans les réponses prédéfinies
         for (const key in botResponses) {
-            if (userMessage.includes(key)) {
+            if (key !== 'default' && userMessage.includes(key)) {
                 return botResponses[key];
             }
         }
         
-        // Si aucune correspondance n'est trouvée
-        return botResponses.default;
+        // Si aucune correspondance n'est trouvée, retourner une réponse aléatoire parmi les réponses par défaut
+        if (Array.isArray(botResponses.default)) {
+            const randomIndex = Math.floor(Math.random() * botResponses.default.length);
+            return botResponses.default[randomIndex];
+        } else {
+            return botResponses.default;
+        }
     }
     
     // Gérer l'ouverture et la fermeture de la fenêtre de chat

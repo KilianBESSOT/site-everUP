@@ -49,23 +49,37 @@
             <p class="section-subtitle">Sélectionnez une date pour prendre rendez-vous</p>
             
             <div class="calendar-container">
-                <div id="custom-calendar" class="custom-calendar">
-                    <div class="calendar-header">
-                        <button id="prev-month" class="calendar-nav-btn"><i class="fas fa-chevron-left"></i></button>
-                        <h3 id="month-year">Avril 2025</h3>
-                        <button id="next-month" class="calendar-nav-btn"><i class="fas fa-chevron-right"></i></button>
+                <div class="calendar-wrapper">
+                    <div id="custom-calendar" class="custom-calendar">
+                        <div class="calendar-header">
+                            <button id="prev-month" class="calendar-nav-btn"><i class="fas fa-chevron-left"></i></button>
+                            <h3 id="month-year">Avril 2025</h3>
+                            <button id="next-month" class="calendar-nav-btn"><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                        <div class="calendar-weekdays">
+                            <div>Lun</div>
+                            <div>Mar</div>
+                            <div>Mer</div>
+                            <div>Jeu</div>
+                            <div>Ven</div>
+                            <div>Sam</div>
+                            <div>Dim</div>
+                        </div>
+                        <div id="calendar-days" class="calendar-days">
+                            <!-- Les jours seront générés par JavaScript -->
+                        </div>
                     </div>
-                    <div class="calendar-weekdays">
-                        <div>Lun</div>
-                        <div>Mar</div>
-                        <div>Mer</div>
-                        <div>Jeu</div>
-                        <div>Ven</div>
-                        <div>Sam</div>
-                        <div>Dim</div>
-                    </div>
-                    <div id="calendar-days" class="calendar-days">
-                        <!-- Les jours seront générés par JavaScript -->
+                    <div id="time-slots" class="time-slots">
+                        <div class="time-slots-header">
+                            <h3 id="selected-date">Sélectionnez une date</h3>
+                            <button id="close-time-slots" class="close-time-slots"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="time-slots-content">
+                            <p class="time-slots-instruction">Choisissez un créneau horaire :</p>
+                            <div id="available-slots" class="available-slots">
+                                <!-- Les créneaux horaires seront générés par JavaScript -->
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -75,6 +89,105 @@
     <!-- Script pour le calendrier personnalisé -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+            // Variable pour stocker la date sélectionnée
+            let selectedDateElement = null;
+            
+            // Fonction pour afficher les créneaux horaires disponibles
+            function showTimeSlots(date) {
+                const customCalendar = document.getElementById('custom-calendar');
+                const timeSlots = document.getElementById('time-slots');
+                const selectedDateHeader = document.getElementById('selected-date');
+                const availableSlotsElement = document.getElementById('available-slots');
+                
+                // Supprimer la classe selected de la date précédemment sélectionnée
+                if (selectedDateElement) {
+                    selectedDateElement.classList.remove('selected');
+                }
+                
+                // Trouver l'élément de date actuel et ajouter la classe selected
+                const dayElements = document.querySelectorAll('.calendar-day');
+                dayElements.forEach(dayElement => {
+                    const dayDate = new Date(date.getFullYear(), date.getMonth(), parseInt(dayElement.textContent));
+                    if (dayDate.getDate() === date.getDate() && 
+                        dayDate.getMonth() === date.getMonth() && 
+                        dayDate.getFullYear() === date.getFullYear() &&
+                        dayElement.classList.contains('current-month-day')) {
+                        dayElement.classList.add('selected');
+                        selectedDateElement = dayElement;
+                    }
+                });
+                
+                // Formater la date pour l'affichage
+                const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+                const formattedDate = date.toLocaleDateString('fr-FR', options);
+                selectedDateHeader.textContent = formattedDate;
+                
+                // Vider les créneaux précédents
+                availableSlotsElement.innerHTML = '';
+                
+                // Générer des créneaux horaires pour la journée
+                const timeSlotsList = [];
+                
+                // Matin (9h-12h)
+                for (let hour = 9; hour < 12; hour++) {
+                    timeSlotsList.push(`${hour}:00`);
+                    timeSlotsList.push(`${hour}:30`);
+                }
+                
+                // Après-midi (14h-17h)
+                for (let hour = 14; hour < 17; hour++) {
+                    timeSlotsList.push(`${hour}:00`);
+                    timeSlotsList.push(`${hour}:30`);
+                }
+                
+                // Fin de journée (17h avec disponibilité limitée)
+                if (Math.random() > 0.3) timeSlotsList.push('17:00');
+                
+                // Créer les éléments pour chaque créneau horaire
+                timeSlotsList.forEach(slot => {
+                    const slotElement = document.createElement('div');
+                    slotElement.className = 'time-slot';
+                    
+                    // Formatter l'heure pour l'affichage (ajouter h)
+                    const [hours, minutes] = slot.split(':');
+                    const formattedSlot = `${hours}h${minutes === '00' ? '00' : minutes}`;
+                    slotElement.textContent = formattedSlot;
+                    
+                    // Ajouter un événement de clic pour réserver ce créneau
+                    slotElement.addEventListener('click', function() {
+                        const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+                        window.open(`https://calendly.com/everup/30min?date=${formattedDate}&time=${slot}`, '_blank');
+                    });
+                    
+                    availableSlotsElement.appendChild(slotElement);
+                });
+                
+                // Faire défiler vers le haut pour montrer les premiers créneaux
+                availableSlotsElement.scrollTop = 0;
+                
+                // Afficher le panneau des créneaux horaires
+                timeSlots.classList.add('active');
+                customCalendar.classList.add('date-selected');
+            }
+            
+            // Fermer le panneau des créneaux horaires
+            document.getElementById('close-time-slots').addEventListener('click', function() {
+                const customCalendar = document.getElementById('custom-calendar');
+                const timeSlots = document.getElementById('time-slots');
+                
+                timeSlots.classList.remove('active');
+                customCalendar.classList.remove('date-selected');
+                
+                // Supprimer la classe selected de la date sélectionnée
+                if (selectedDateElement) {
+                    selectedDateElement.classList.remove('selected');
+                    selectedDateElement = null;
+                }
+            });
+            
+            // Rendre la fonction accessible globalement
+            window.showTimeSlots = showTimeSlots;
+            
             const calendarDays = document.getElementById('calendar-days');
             const monthYear = document.getElementById('month-year');
             const prevMonthBtn = document.getElementById('prev-month');
@@ -103,15 +216,11 @@
                 // Nombre de jours dans le mois
                 const daysInMonth = new Date(year, month + 1, 0).getDate();
                 
-                // Jours du mois précédent pour remplir la première semaine
-                const daysInPrevMonth = new Date(year, month, 0).getDate();
-                
-                // Ajouter les jours du mois précédent
-                for (let i = firstDay - 1; i >= 0; i--) {
-                    const dayElement = document.createElement('div');
-                    dayElement.classList.add('calendar-day', 'prev-month-day');
-                    dayElement.textContent = daysInPrevMonth - i;
-                    calendarDays.appendChild(dayElement);
+                // Ajouter des cellules vides pour l'alignement (pour les jours avant le 1er du mois)
+                for (let i = 0; i < firstDay; i++) {
+                    const emptyCell = document.createElement('div');
+                    emptyCell.className = 'calendar-empty-cell';
+                    calendarDays.appendChild(emptyCell);
                 }
                 
                 // Ajouter les jours du mois actuel
@@ -120,32 +229,32 @@
                     dayElement.classList.add('calendar-day', 'current-month-day');
                     dayElement.textContent = i;
                     
+                    // Créer un objet Date pour ce jour
+                    const thisDate = new Date(year, month, i);
+                    const isWeekend = thisDate.getDay() === 0 || thisDate.getDay() === 6; // 0 = dimanche, 6 = samedi
+                    const isPast = thisDate < new Date(currentDate.setHours(0, 0, 0, 0));
+                    
                     // Vérifier si c'est aujourd'hui
                     if (year === currentDate.getFullYear() && month === currentDate.getMonth() && i === currentDate.getDate()) {
                         dayElement.classList.add('today');
                     }
                     
-                    // Ajouter un événement de clic pour rediriger vers Calendly
-                    dayElement.addEventListener('click', function() {
-                        const selectedDate = new Date(year, month, i);
-                        const formattedDate = `${selectedDate.getFullYear()}-${String(selectedDate.getMonth() + 1).padStart(2, '0')}-${String(selectedDate.getDate()).padStart(2, '0')}`;
-                        window.open(`https://calendly.com/everup/30min?date=${formattedDate}`, '_blank');
-                    });
+                    // Ajouter une classe pour les jours non réservables (week-ends ou jours passés)
+                    if (isWeekend || isPast) {
+                        dayElement.classList.add('unavailable-day');
+                    } else {
+                        // Ajouter un événement de clic pour afficher les créneaux horaires disponibles
+                        dayElement.classList.add('available-day');
+                        dayElement.addEventListener('click', function() {
+                            const selectedDate = new Date(year, month, i);
+                            showTimeSlots(selectedDate);
+                        });
+                    }
                     
                     calendarDays.appendChild(dayElement);
                 }
                 
-                // Calculer combien de jours du mois suivant sont nécessaires
-                const totalDaysDisplayed = calendarDays.childElementCount;
-                const remainingCells = 42 - totalDaysDisplayed; // 6 semaines x 7 jours = 42
-                
-                // Ajouter les jours du mois suivant
-                for (let i = 1; i <= remainingCells; i++) {
-                    const dayElement = document.createElement('div');
-                    dayElement.classList.add('calendar-day', 'next-month-day');
-                    dayElement.textContent = i;
-                    calendarDays.appendChild(dayElement);
-                }
+                // Pas besoin d'ajouter les jours du mois suivant
             }
             
             // Navigation vers le mois précédent
