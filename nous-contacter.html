@@ -25,6 +25,7 @@
                         <li class="nav-item"><a href="index.html" class="nav-link">Accueil</a></li>
                         <li class="nav-item"><a href="a-propos.html" class="nav-link">À propos</a></li>
                         <li class="nav-item"><a href="nous-contacter.html" class="nav-link active">Nous contacter</a></li>
+                        <li class="nav-item"><a href="https://calendly.com/christophe-lyni/point-avec-christophe" class="header-btn">Essai gratuit</a></li>
                     </ul>
                 </div>
             </nav>
@@ -86,6 +87,10 @@
         </div>
     </section>
     
+
+    <!-- Script Calendly -->
+    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+    
     <!-- Script pour le calendrier personnalisé -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -119,8 +124,11 @@
                 
                 // Formater la date pour l'affichage
                 const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-                const formattedDate = date.toLocaleDateString('fr-FR', options);
-                selectedDateHeader.textContent = formattedDate;
+                const formattedDateDisplay = date.toLocaleDateString('fr-FR', options);
+                selectedDateHeader.textContent = formattedDateDisplay;
+                
+                // Formater la date pour Calendly (YYYY-MM-DD)
+                const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
                 
                 // Vider les créneaux précédents
                 availableSlotsElement.innerHTML = '';
@@ -128,20 +136,22 @@
                 // Générer des créneaux horaires pour la journée
                 const timeSlotsList = [];
                 
-                // Matin (9h-12h)
-                for (let hour = 9; hour < 12; hour++) {
-                    timeSlotsList.push(`${hour}:00`);
-                    timeSlotsList.push(`${hour}:30`);
-                }
+                // Début de matinée (9h-9h30)
+                timeSlotsList.push('9:00');
+                timeSlotsList.push('9:30');
                 
-                // Après-midi (14h-17h)
-                for (let hour = 14; hour < 17; hour++) {
-                    timeSlotsList.push(`${hour}:00`);
-                    timeSlotsList.push(`${hour}:30`);
-                }
+                // Fin de matinée et début d'après-midi (11h30-13h30)
+                timeSlotsList.push('11:30');
+                timeSlotsList.push('12:00');
+                timeSlotsList.push('12:30');
+                timeSlotsList.push('13:00');
+                timeSlotsList.push('13:30');
                 
-                // Fin de journée (17h avec disponibilité limitée)
-                if (Math.random() > 0.3) timeSlotsList.push('17:00');
+                // Fin d'après-midi (15h-16h30)
+                timeSlotsList.push('15:00');
+                timeSlotsList.push('15:30');
+                timeSlotsList.push('16:00');
+                timeSlotsList.push('16:30');
                 
                 // Créer les éléments pour chaque créneau horaire
                 timeSlotsList.forEach(slot => {
@@ -155,8 +165,7 @@
                     
                     // Ajouter un événement de clic pour réserver ce créneau
                     slotElement.addEventListener('click', function() {
-                        const formattedDate = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
-                        window.open(`https://calendly.com/everup/30min?date=${formattedDate}&time=${slot}`, '_blank');
+                        window.open(`https://calendly.com/christophe-lyni/point-avec-christophe?date=${formattedDate}&time=${slot}`, '_blank');
                     });
                     
                     availableSlotsElement.appendChild(slotElement);

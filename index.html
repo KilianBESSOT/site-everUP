@@ -25,6 +25,7 @@
                         <li class="nav-item"><a href="index.html" class="nav-link active">Accueil</a></li>
                         <li class="nav-item"><a href="a-propos.html" class="nav-link">À propos</a></li>
                         <li class="nav-item"><a href="nous-contacter.html" class="nav-link">Nous contacter</a></li>
+                        <li class="nav-item"><a href="https://calendly.com/christophe-lyni/point-avec-christophe" class="header-btn">Essai gratuit</a></li>
                     </ul>
                 </div>
             </nav>
@@ -40,8 +41,28 @@
                 <p class="subtitle">La solution digitale d'engagement pour vos équipes<br>100% française en marque blanche</p>
                 
                 <div class="cta-buttons">
-                    <a href="#" class="btn btn-primary">Réservez une démo gratuite</a>
+                    <a href="https://calendly.com/christophe-lyni/point-avec-christophe" class="btn btn-primary" id="demo-button">Réservez une démo gratuite</a>
+                    <a href="https://calendly.com/christophe-lyni/point-avec-christophe" class="btn btn-secondary" id="trial-button">Réserver un essai gratuit</a>
                 </div>
+                
+                <script>
+                    // Ajouter un gestionnaire d'événement pour le bouton de démo
+                    document.getElementById('demo-button').addEventListener('click', function(e) {
+                        e.preventDefault();
+                        
+                        // Obtenir la date actuelle
+                        const now = new Date();
+                        
+                        // Ajouter un jour pour proposer un rendez-vous pour demain
+                        now.setDate(now.getDate() + 1);
+                        
+                        // Formater la date pour Calendly (YYYY-MM-DD)
+                        const formattedDate = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
+                        
+                        // Rediriger vers Calendly avec la date de demain
+                        window.location.href = `https://calendly.com/christophe-lyni/point-avec-christophe?date=${formattedDate}`;
+                    });
+                </script>
             </div>
         </div>
     </header>

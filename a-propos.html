@@ -25,6 +25,7 @@
                         <li class="nav-item"><a href="index.html" class="nav-link">Accueil</a></li>
                         <li class="nav-item"><a href="a-propos.html" class="nav-link active">À propos</a></li>
                         <li class="nav-item"><a href="nous-contacter.html" class="nav-link">Nous contacter</a></li>
+                        <li class="nav-item"><a href="https://calendly.com/christophe-lyni/point-avec-christophe" class="header-btn">Essai gratuit</a></li>
                     </ul>
                 </div>
             </nav>
@@ -43,7 +44,7 @@
     </section>
 
     <!-- Section À propos -->
-    <section class="section-histoire">
+    <section class="section-histoire section-white">
         <div class="container">
             <h2 class="section-title">Notre histoire</h2>
             <p class="section-subtitle">Comment everUP est né</p>
@@ -70,11 +71,79 @@
         </div>
     </section>
 
+    <!-- Section Galerie Photos -->
+    <section class="photo-gallery-section section-blue">
+        <div class="container">
+            
+            <div class="photo-carousel-container">
+                <!-- Boutons de navigation -->
+                <button class="carousel-nav-btn carousel-prev" aria-label="Image précédente">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="carousel-nav-btn carousel-next" aria-label="Image suivante">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                
+                <div class="photo-carousel">
+                    <!-- Les images seront ajoutées ultérieurement -->
+                    <div class="carousel-item active">
+                        <div class="photo-placeholder">
+                            <div class="placeholder-content">
+                                <i class="fas fa-image"></i>
+                                <p>Photo 1</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="photo-placeholder">
+                            <div class="placeholder-content">
+                                <i class="fas fa-image"></i>
+                                <p>Photo 2</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="photo-placeholder">
+                            <div class="placeholder-content">
+                                <i class="fas fa-image"></i>
+                                <p>Photo 3</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="photo-placeholder">
+                            <div class="placeholder-content">
+                                <i class="fas fa-image"></i>
+                                <p>Photo 4</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <div class="photo-placeholder">
+                            <div class="placeholder-content">
+                                <i class="fas fa-image"></i>
+                                <p>Photo 5</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="carousel-indicators">
+                    <span class="indicator active" data-index="0"></span>
+                    <span class="indicator" data-index="1"></span>
+                    <span class="indicator" data-index="2"></span>
+                    <span class="indicator" data-index="3"></span>
+                    <span class="indicator" data-index="4"></span>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- Section Témoignages -->
-    <section class="testimonials-section">
+    <section class="testimonials-section section-white">
         <div class="container">
             <h2 class="section-title">Témoignages</h2>
-            <p class="section-subtitle-white">Ce que nos clients disent de nous</p>
+            <p class="section-subtitle">Ce que nos clients disent de nous</p>
             
             <div class="testimonials-grid">
                 <div class="testimonial-card">
@@ -114,7 +183,7 @@
     </section>
 
     <!-- Section Nos Missions -->
-    <section class="missions-section">
+    <section class="missions-section section-blue">
         <div class="container">
             <h2 class="section-title">Nos missions</h2>
             <p class="section-subtitle">Comment nous vous accompagnons</p>
@@ -163,7 +232,7 @@
     </section>
 
     <!-- Footer -->
-    <footer class="footer-bleu">
+    <footer class="footer-white">
         <div class="container">
             <div class="footer-grid">               
                 <div class="footer-coordonnées">
@@ -194,8 +263,19 @@
         </div>
     </footer>
 
+    <!-- Modal pour afficher les images en grand -->
+    <div class="image-modal" id="imageModal">
+        <div class="modal-content">
+            <span class="close-modal">
+                <i class="fas fa-times"></i>
+            </span>
+            <img src="" alt="Image agrandie" class="modal-image" id="modalImage">
+        </div>
+    </div>
+    
     <script src="js/main.js"></script>
     <script src="js/scroll-header.js"></script>
     <script src="js/chat.js"></script>
+    <script src="js/carousel.js"></script>
 </body>
 </html>
