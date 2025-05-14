@@ -55,26 +55,29 @@
             <p class="section-subtitle">Sélectionnez une date pour prendre rendez-vous</p>
             
             <div class="calendar-container">
-                <div class="calendar-wrapper">
-                    <div id="custom-calendar" class="custom-calendar">
-                        <div class="calendar-header">
-                            <button id="prev-month" class="calendar-nav-btn"><i class="fas fa-chevron-left"></i></button>
-                            <h3 id="month-year">Avril 2025</h3>
-                            <button id="next-month" class="calendar-nav-btn"><i class="fas fa-chevron-right"></i></button>
-                        </div>
-                        <div class="calendar-weekdays">
-                            <div>Lun</div>
-                            <div>Mar</div>
-                            <div>Mer</div>
-                            <div>Jeu</div>
-                            <div>Ven</div>
-                            <div>Sam</div>
-                            <div>Dim</div>
-                        </div>
-                        <div id="calendar-days" class="calendar-days">
-                            <!-- Les jours seront générés par JavaScript -->
+                <div class="calendar-container-flex">
+                    <div class="calendar-wrapper">
+                        <div id="custom-calendar" class="custom-calendar">
+                            <div class="calendar-header">
+                                <button id="prev-month" class="calendar-nav-btn"><i class="fas fa-chevron-left"></i></button>
+                                <h3 id="month-year">Avril 2025</h3>
+                                <button id="next-month" class="calendar-nav-btn"><i class="fas fa-chevron-right"></i></button>
+                            </div>
+                            <div class="calendar-weekdays">
+                                <div>Lun</div>
+                                <div>Mar</div>
+                                <div>Mer</div>
+                                <div>Jeu</div>
+                                <div>Ven</div>
+                                <div>Sam</div>
+                                <div>Dim</div>
+                            </div>
+                            <div id="calendar-days" class="calendar-days">
+                                <!-- Les jours seront générés par JavaScript -->
+                            </div>
                         </div>
                     </div>
+                    
                     <div id="time-slots" class="time-slots">
                         <div class="time-slots-header">
                             <h3 id="selected-date">Sélectionnez une date</h3>
@@ -114,13 +117,10 @@
                     selectedDateElement.classList.remove('selected');
                 }
                 
-                // Trouver l'élément de date actuel et ajouter la classe selected
+                // Ajouter la classe selected à la date sélectionnée
                 const dayElements = document.querySelectorAll('.calendar-day');
                 dayElements.forEach(dayElement => {
-                    const dayDate = new Date(date.getFullYear(), date.getMonth(), parseInt(dayElement.textContent));
-                    if (dayDate.getDate() === date.getDate() && 
-                        dayDate.getMonth() === date.getMonth() && 
-                        dayDate.getFullYear() === date.getFullYear() &&
+                    if (dayElement.textContent == date.getDate() && 
                         dayElement.classList.contains('current-month-day')) {
                         dayElement.classList.add('selected');
                         selectedDateElement = dayElement;
@@ -139,24 +139,11 @@
                 availableSlotsElement.innerHTML = '';
                 
                 // Générer des créneaux horaires pour la journée
-                const timeSlotsList = [];
-                
-                // Début de matinée (9h-9h30)
-                timeSlotsList.push('9:00');
-                timeSlotsList.push('9:30');
-                
-                // Fin de matinée et début d'après-midi (11h30-13h30)
-                timeSlotsList.push('11:30');
-                timeSlotsList.push('12:00');
-                timeSlotsList.push('12:30');
-                timeSlotsList.push('13:00');
-                timeSlotsList.push('13:30');
-                
-                // Fin d'après-midi (15h-16h30)
-                timeSlotsList.push('15:00');
-                timeSlotsList.push('15:30');
-                timeSlotsList.push('16:00');
-                timeSlotsList.push('16:30');
+                const timeSlotsList = [
+                    '9:00', '9:30', '10:00', '10:30', '11:00', '11:30',
+                    '13:00', '13:30', '14:00', '14:30', '15:00', '15:30',
+                    '16:00', '16:30', '17:00'
+                ];
                 
                 // Créer les éléments pour chaque créneau horaire
                 timeSlotsList.forEach(slot => {
@@ -182,25 +169,25 @@
                 // Afficher le panneau des créneaux horaires
                 timeSlots.classList.add('active');
                 customCalendar.classList.add('date-selected');
+                
+                // Faire défiler vers les créneaux horaires
+                timeSlots.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }
             
-            // Fermer le panneau des créneaux horaires
+            // Ajouter un événement de clic pour fermer les créneaux horaires
             document.getElementById('close-time-slots').addEventListener('click', function() {
-                const customCalendar = document.getElementById('custom-calendar');
                 const timeSlots = document.getElementById('time-slots');
+                const customCalendar = document.getElementById('custom-calendar');
                 
                 timeSlots.classList.remove('active');
                 customCalendar.classList.remove('date-selected');
                 
-                // Supprimer la classe selected de la date sélectionnée
+                // Désélectionner la date
                 if (selectedDateElement) {
                     selectedDateElement.classList.remove('selected');
                     selectedDateElement = null;
                 }
             });
-            
-            // Rendre la fonction accessible globalement
-            window.showTimeSlots = showTimeSlots;
             
             const calendarDays = document.getElementById('calendar-days');
             const monthYear = document.getElementById('month-year');
