@@ -276,7 +276,9 @@ img {
     border: 2px solid var(--primary-color);
     display: inline-flex;
     align-items: center;
+    justify-content: center;
     height: 36px;
+    text-align: center;
 }
 
 .header-btn:hover {
@@ -786,6 +788,7 @@ img {
     gap: 8px;
     text-align: center;
     padding: 5px;
+    margin-bottom: 10px;
 }
 
 .calendar-day {
@@ -868,6 +871,7 @@ img {
     opacity: 0;
     position: relative;
     box-shadow: var(--box-shadow);
+    margin-top: 20px;
 }
 
 .time-slots.active {
@@ -1769,7 +1773,8 @@ img {
     
     .nav-menu {
         flex-direction: column;
-        align-items: flex-start;
+        align-items: center;
+        width: 100%;
     }
     
     .nav-item {
@@ -1784,6 +1789,7 @@ img {
         width: 100%;
         display: block;
         padding: 10px 0;
+        text-align: center;
     }
     
     .scrolled .nav-link {
@@ -1795,10 +1801,12 @@ img {
     }
     
     .header-btn {
-        margin-left: 0;
         margin-top: 10px;
-        display: inline-block;
-        width: auto;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        padding: 8px 16px;
+        text-align: center;
     }
 }
 
