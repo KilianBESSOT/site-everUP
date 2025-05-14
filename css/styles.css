@@ -12,6 +12,7 @@
     --border-radius: 10px;
     --box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
     --transition: all 0.3s ease;
+    --gradient-blue: linear-gradient(114deg, #070934 45.73%, #151B9A 100.01%);
 }
 
 * {
@@ -205,7 +206,7 @@ img {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(114deg, #070934 19.73%, #151B9A 100.01%);
+    background: var(--gradient-blue);
     color: white;
     position: relative;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
@@ -518,7 +519,7 @@ img {
 /* Section CTA */
 .cta-section {
     padding: 80px 0;
-    background: linear-gradient(114deg, #070934 19.73%, #151B9A 100.01%);
+    background: var(--gradient-blue);
     color: var(--light-text);
     text-align: center;
 }
@@ -1698,9 +1699,9 @@ img {
         top: 0;
         right: -100%;
         width: 80%;
-        max-width: 300px;
+        max-width: 250px;
         height: 100vh;
-        background-color: var(--secondary-color);
+        background: var(--gradient-blue);
         padding: 80px 20px 30px;
         transition: 0.5s ease;
         z-index: 1000;
@@ -1710,6 +1711,10 @@ img {
     
     .nav-links.active {
         right: 0;
+    }
+    
+    .scrolled .nav-links {
+        background: var(--light-text);
     }
     
     .nav-menu {
@@ -1729,6 +1734,14 @@ img {
         width: 100%;
         display: block;
         padding: 10px 0;
+    }
+    
+    .scrolled .nav-link {
+        color: var(--secondary-color);
+    }
+    
+    .scrolled .nav-link:hover {
+        color: var(--primary-color);
     }
     
     .header-btn {
