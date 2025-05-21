@@ -41,6 +41,19 @@ a {
     color: inherit;
 }
 
+/* Style spécifique pour les liens dans la section À propos */
+.about-text a {
+    text-decoration: underline;
+    text-decoration-color: var(--text-color);
+    font-weight: 500;
+    transition: color 0.3s ease, text-decoration-color 0.3s ease;
+}
+
+.about-text a:hover {
+    color: var(--primary-color);
+    text-decoration-color: var(--primary-color);
+}
+
 ul {
     list-style: none;
 }
@@ -271,7 +284,6 @@ img {
     border-radius: var(--border-radius);
     font-weight: 600;
     font-size: 16px;
-    transition: var(--transition);
     margin-left: 15px;
     border: 2px solid var(--primary-color);
     display: inline-flex;
@@ -284,8 +296,6 @@ img {
 .header-btn:hover {
     background-color: transparent;
     color: var(--light-text);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(255, 127, 0, 0.3);
 }
 
 .scrolled .header-btn {
@@ -445,8 +455,10 @@ img {
 
 .solutions-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     gap: 30px;
+    margin-top: 40px;
+    margin-bottom: 50px;
 }
 
 .solution-card {
@@ -456,6 +468,10 @@ img {
     text-align: center;
     box-shadow: var(--box-shadow);
     transition: var(--transition);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
 }
 
 .solution-card:hover {
@@ -464,8 +480,8 @@ img {
 }
 
 .solution-icon {
-    width: 250px;
-    height: 150px;
+    width: 120px;
+    height: 80px;
     margin: 0 auto 20px;
     display: flex;
     align-items: center;

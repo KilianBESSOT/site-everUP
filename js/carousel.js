@@ -2,10 +2,45 @@
 document.addEventListener('DOMContentLoaded', function() {
     // Éléments du carrousel
     const carousel = document.querySelector('.photo-carousel');
-    const originalItems = document.querySelectorAll('.carousel-item');
-    const indicators = document.querySelectorAll('.indicator');
     const prevButton = document.querySelector('.carousel-prev');
     const nextButton = document.querySelector('.carousel-next');
+    
+    // Vider le carrousel des placeholders
+    carousel.innerHTML = '';
+    
+    // Chemin vers le dossier d'images
+    const imageFolderPath = 'images/img société/';
+    
+    // Liste des images dans le dossier (à mettre à jour manuellement quand de nouvelles images sont ajoutées)
+    const imageFiles = [
+        'image (21).jpg',
+        'image (22).jpg',
+        'image (23).jpg',
+        'image (24).jpg',
+        'image (25).jpg',
+        'image (26).jpg'
+    ];
+    
+    // Générer dynamiquement les éléments du carrousel
+    imageFiles.forEach((imageFile, index) => {
+        const carouselItem = document.createElement('div');
+        carouselItem.className = 'carousel-item' + (index === 0 ? ' active' : '');
+        
+        const img = document.createElement('img');
+        img.src = imageFolderPath + imageFile;
+        img.alt = 'Photo de l\'entreprise ' + (index + 1);
+        img.className = 'carousel-image';
+        
+        // Ajouter un gestionnaire d'événements pour ouvrir la modal au clic
+        img.addEventListener('click', () => {
+            openImageModal(img.src);
+        });
+        
+        carouselItem.appendChild(img);
+        carousel.appendChild(carouselItem);
+    });
+    
+    // Mettre à jour les variables après la génération dynamique
     
     // Éléments pour la modal
     const imageModal = document.getElementById('imageModal');
@@ -16,7 +51,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const autoplaySpeed = 5000; // Vitesse de défilement automatique en ms
     let currentIndex = 0;
     let autoplayInterval;
-    const totalItems = originalItems.length;
+    const totalItems = imageFiles.length;
     
     // Fonction pour afficher une diapositive spécifique
     function showSlide(index) {
@@ -24,12 +59,13 @@ document.addEventListener('DOMContentLoaded', function() {
         // Utiliser le modulo pour assurer un défilement infini
         currentIndex = (index % totalItems + totalItems) % totalItems;
         
-        // Déplacer le carrousel
-        const offset = currentIndex * 70;
-        carousel.style.transform = `translateX(calc(-${offset}% + 15%))`;
+        // Déplacer le carrousel pour centrer l'image active
+        const offset = currentIndex * 100;
+        carousel.style.transform = `translateX(-${offset}%)`;
         
         // Mettre à jour les classes active pour les items
-        items.forEach((item, i) => {
+        const carouselItems = document.querySelectorAll('.carousel-item');
+        carouselItems.forEach((item, i) => {
             if (i === currentIndex) {
                 item.classList.add('active');
             } else {
@@ -38,6 +74,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         
         // Mettre à jour les indicateurs
+        const indicators = document.querySelectorAll('.indicator');
         indicators.forEach((indicator, i) => {
             if (i === currentIndex) {
                 indicator.classList.add('active');
@@ -67,16 +104,25 @@ document.addEventListener('DOMContentLoaded', function() {
         clearInterval(autoplayInterval);
     }
     
-    // Ajouter des écouteurs d'événements pour les indicateurs
-    indicators.forEach((indicator, index) => {
+    // Créer les indicateurs de façon dynamique
+    const indicatorsContainer = document.createElement('div');
+    indicatorsContainer.className = 'carousel-indicators';
+    document.querySelector('.photo-carousel-container').appendChild(indicatorsContainer);
+    
+    // Ajouter les indicateurs en fonction du nombre d'images
+    for (let i = 0; i < totalItems; i++) {
+        const indicator = document.createElement('span');
+        indicator.className = 'indicator' + (i === 0 ? ' active' : '');
+        indicator.setAttribute('data-index', i);
+        indicatorsContainer.appendChild(indicator);
+        
+        // Ajouter l'écouteur d'événement
         indicator.addEventListener('click', () => {
-            // Ajuster l'index pour tenir compte des éléments clones
-            // L'index réel est décalé de 1 (car on a ajouté un élément au début)
-            showSlide(index + 1);
+            showSlide(i);
             stopAutoplay();
             startAutoplay(); // Redémarrer l'autoplay après un clic
         });
-    });
+    }
     
     // Ajouter des écouteurs d'événements pour les boutons de navigation
     prevButton.addEventListener('click', () => {
