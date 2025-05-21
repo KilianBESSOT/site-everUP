@@ -1,0 +1,99 @@
+/* Styles pour le carrousel de photos en cercle */
+.circle-carousel-container {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 60px;
+    overflow: hidden;
+}
+
+.circle-carousel-container.fullwidth {
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+.circle-carousel {
+    display: flex;
+    transition: transform 0.5s ease;
+    margin: 0 auto;
+    gap: 20px;
+}
+
+.circle-carousel-slide {
+    flex: 0 0 calc(100% / 5);
+    min-width: calc(100% / 5);
+    padding: 15px;
+    box-sizing: border-box;
+    transition: all 0.3s ease;
+    opacity: 0.7;
+    transform: scale(0.95);
+}
+
+.circle-carousel-slide.active {
+    opacity: 1;
+    transform: scale(1);
+}
+
+
+
+/* Utiliser le même style que les person-card existantes */
+.circle-carousel .person-card {
+    width: 100%;
+    margin-bottom: 30px;
+}
+
+.circle-carousel .person-photo-container {
+    width: 220px;
+    height: 220px;
+    margin: 0 auto 25px;
+}
+
+.circle-carousel .person-info h3 {
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+.circle-carousel .person-info p {
+    font-size: 16px;
+}
+
+/* Boutons de navigation masqués */
+.circle-nav-btn {
+    display: none;
+}
+
+/* Indicators - masqués */
+.circle-indicators {
+    display: none;
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .circle-carousel-slide {
+        flex: 0 0 calc(100% / 4);
+        min-width: calc(100% / 4);
+    }
+}
+
+@media (max-width: 992px) {
+    .circle-carousel-slide {
+        flex: 0 0 calc(100% / 3);
+        min-width: calc(100% / 3);
+    }
+}
+
+@media (max-width: 768px) {
+    .circle-carousel-slide {
+        flex: 0 0 calc(100% / 2);
+        min-width: calc(100% / 2);
+    }
+}
+
+@media (max-width: 576px) {
+    .circle-carousel-slide {
+        flex: 0 0 100%;
+        min-width: 100%;
+    }
+}

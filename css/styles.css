@@ -480,9 +480,9 @@ img {
 }
 
 .solution-icon {
-    width: 120px;
-    height: 80px;
-    margin: 0 auto 20px;
+    width: 140px;
+    height: 100px;
+    margin: 0 auto 25px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -495,6 +495,11 @@ img {
 .solution-icon img {
     max-width: 100%;
     max-height: 100%;
+}
+
+.solution-icon i {
+    font-size: 65px;
+    color: var(--primary-color);
 }
 
 .solution-card h3 {
@@ -511,6 +516,104 @@ img {
 .solution-card .btn {
     background-color: var(--primary-color);
     color: var(--light-text);
+}
+
+/* Sections Associés, Équipe et Galerie */
+.associates-section,
+.team-section,
+.gallery-section {
+    padding: 80px 0;
+}
+
+.associates-section {
+    background-color: var(--light-gray);
+}
+
+.associates-section .people-grid {
+    display: flex;
+    justify-content: center;
+    gap: 60px;
+    flex-wrap: wrap;
+}
+
+.team-section {
+    background: var(--gradient-blue);
+    color: white;
+}
+
+.team-section .people-grid {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    flex-wrap: wrap;
+}
+
+.gallery-section {
+    background-color: var(--light-gray);
+    padding: 100px 0;
+}
+
+.team-section .section-title,
+.team-section .section-subtitle {
+    color: white;
+}
+
+.people-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 40px;
+    margin-top: 40px;
+}
+
+/* Style spécifique pour la grille par défaut, sauf pour les sections avec style personnalisé */
+.people-grid:not(.associates-section .people-grid):not(.team-section .people-grid) {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 40px;
+}
+
+.person-card {
+    text-align: center;
+    transition: var(--transition);
+}
+
+.person-card:hover {
+    transform: translateY(-10px);
+}
+
+.person-photo-container {
+    width: 180px;
+    height: 180px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+}
+
+.person-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.person-info h3 {
+    font-size: 18px;
+    margin-bottom: 5px;
+    color: var(--secondary-color);
+}
+
+.team-section .person-info h3 {
+    color: white;
+}
+
+.person-info p {
+    font-size: 14px;
+    color: var(--dark-gray);
+    margin-bottom: 5px;
+}
+
+.team-section .person-info p {
+    color: rgba(255, 255, 255, 0.8);
 }
 
 /* Section Témoignages */
