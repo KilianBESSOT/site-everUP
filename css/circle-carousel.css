@@ -8,23 +8,27 @@
 }
 
 .circle-carousel-container.fullwidth {
-    max-width: 100%;
-    padding: 0;
-    margin: 0;
+    max-width: 1040px; /* 1000px + 20px padding de chaque côté */
     width: 100%;
+    padding: 0;
+    margin: 0 auto;
+    overflow: hidden;
+    box-sizing: border-box;
 }
 
 .circle-carousel {
     display: flex;
     transition: transform 0.5s ease;
     margin: 0 auto;
-    gap: 20px;
+    gap: 25px; /* Espacement ajusté entre les photos */
+    width: 1000px; /* Largeur fixe pour afficher exactement 5 photos */
+    padding: 0;
 }
 
 .circle-carousel-slide {
-    flex: 0 0 calc(100% / 5);
-    min-width: calc(100% / 5);
-    padding: 15px;
+    flex: 0 0 180px; /* Largeur fixe pour correspondre aux autres sections */
+    min-width: 180px;
+    padding: 0 10px; /* Padding horizontal uniquement */
     box-sizing: border-box;
     transition: all 0.3s ease;
     opacity: 0.7;
@@ -45,9 +49,12 @@
 }
 
 .circle-carousel .person-photo-container {
-    width: 220px;
-    height: 220px;
-    margin: 0 auto 25px;
+    width: 180px; /* Garder la même taille pour les photos */
+    height: 180px;
+    margin: 0 auto 20px;
+    border-radius: 50%;
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
 }
 
 .circle-carousel .person-info h3 {
@@ -71,29 +78,29 @@
 
 /* Responsive */
 @media (max-width: 1200px) {
-    .circle-carousel-slide {
-        flex: 0 0 calc(100% / 4);
-        min-width: calc(100% / 4);
+    .circle-carousel {
+        min-width: 800px; /* Pour 4 photos */
+        width: 800px;
     }
 }
 
 @media (max-width: 992px) {
-    .circle-carousel-slide {
-        flex: 0 0 calc(100% / 3);
-        min-width: calc(100% / 3);
+    .circle-carousel {
+        min-width: 600px; /* Pour 3 photos */
+        width: 600px;
     }
 }
 
 @media (max-width: 768px) {
-    .circle-carousel-slide {
-        flex: 0 0 calc(100% / 2);
-        min-width: calc(100% / 2);
+    .circle-carousel {
+        min-width: 400px; /* Pour 2 photos */
+        width: 400px;
     }
 }
 
 @media (max-width: 576px) {
-    .circle-carousel-slide {
-        flex: 0 0 100%;
-        min-width: 100%;
+    .circle-carousel {
+        min-width: 200px; /* Pour 1 photo */
+        width: 200px;
     }
 }

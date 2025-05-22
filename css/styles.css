@@ -447,6 +447,11 @@ img {
     color: var(--primary-color);
 }
 
+.footer.section-blue {
+    padding: 60px 0 30px;
+    color: white;
+}
+
 /* Section Solutions */
 .solutions-section {
     padding: 80px 0;
@@ -537,8 +542,7 @@ img {
 }
 
 .team-section {
-    background: var(--gradient-blue);
-    color: white;
+    padding: 80px 0;
 }
 
 .team-section .people-grid {
@@ -602,7 +606,7 @@ img {
     color: var(--secondary-color);
 }
 
-.team-section .person-info h3 {
+.section-blue .person-info h3 {
     color: white;
 }
 
@@ -612,7 +616,7 @@ img {
     margin-bottom: 5px;
 }
 
-.team-section .person-info p {
+.section-blue .person-info p {
     color: rgba(255, 255, 255, 0.8);
 }
 
@@ -620,8 +624,6 @@ img {
 
 .testimonials-section {
     padding: 80px 0;
-    background: linear-gradient(white);
-    color: white;
 }
 
 .testimonials-grid {
@@ -630,8 +632,12 @@ img {
     gap: 30px;
 }
 
-.testimonials-section h2{
+.section-blue h2 {
     color: white;
+}
+
+.section-white h2 {
+    color: var(--secondary-color);
 }
 
 .testimonial-card {
@@ -791,10 +797,9 @@ img {
     min-height: 120px;
 }
 
-/* Section Calendrier */
-.calendar-section {
+/* Section Galerie */
+.gallery-section {
     padding: 80px 0;
-    background-color: var(--light-gray);
 }
 
 .calendar-container {
@@ -1133,7 +1138,7 @@ img {
 
 .section-white {
     padding: 80px 0;
-    background-color: white;
+    background: white;
     color: var(--text-color);
 }
 

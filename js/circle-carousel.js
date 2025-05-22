@@ -1,4 +1,4 @@
-// Script pour le carrousel de photos en cercle avec défilement automatique
+// Script pour le carrousel de photos avec défilement automatique
 document.addEventListener('DOMContentLoaded', function() {
     // Éléments du carrousel
     const carousel = document.querySelector('.circle-carousel');
@@ -14,17 +14,22 @@ document.addEventListener('DOMContentLoaded', function() {
         { file: 'image (24).jpg', title: 'Lancement produit', date: 'Mars 2024' },
         { file: 'image (25).jpg', title: 'Workshop clients', date: 'Février 2024' },
         { file: 'image (26).jpg', title: 'Team building', date: 'Janvier 2024' },
-        { file: 'Equipe 8 .jpg', title: 'Formation', date: 'Mai 2024' },
-        { file: 'Equipe 9.jpg', title: 'Conférence', date: 'Avril 2024' }
     ];
+    
+    // Constantes pour les dimensions
+    const slideWidth = 180; // Largeur d'une slide (comme dans les autres sections)
+    const slideGap = 25; // Espacement entre les slides
+    const slideFullWidth = slideWidth + slideGap; // Largeur totale d'une slide avec gap
+    const visibleSlides = 5; // Nombre de slides visibles à la fois
     
     // Variables de contrôle
     let currentIndex = 0;
     const totalItems = galleryItems.length;
-    let itemsPerView = window.innerWidth > 1200 ? 5 : window.innerWidth > 992 ? 4 : window.innerWidth > 768 ? 3 : window.innerWidth > 576 ? 2 : 1;
+    const maxIndex = Math.max(0, totalItems - visibleSlides); // Index maximum pour le défilement
     
     // Intervalle pour le défilement automatique (en millisecondes)
-    const autoScrollInterval = 2000;
+    const autoScrollInterval = 3000;
+    let autoScrollTimer;
     
     // Créer les slides du carrousel
     function createSlides() {
@@ -32,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
         
         galleryItems.forEach((item, index) => {
             const slide = document.createElement('div');
-            slide.className = 'circle-carousel-slide' + (index === currentIndex ? ' active' : '');
+            slide.className = 'circle-carousel-slide';
             
             slide.innerHTML = `
                 <div class="person-card">
@@ -48,159 +53,60 @@ document.addEventListener('DOMContentLoaded', function() {
             
             carousel.appendChild(slide);
         });
+        
+        // Positionner le carrousel au début
+        updateCarousel();
     }
     
     // Mettre à jour l'affichage du carrousel
     function updateCarousel() {
-        // Réinitialiser la position de décalage en pixels
-        pixelPosition = 0;
+        // Calculer la position du carrousel en pixels
+        const offset = currentIndex * slideFullWidth;
         
-        // Calculer la position du carrousel
-        const slideWidth = 100 / itemsPerView;
-        const offset = currentIndex * slideWidth;
-        carousel.style.transform = `translateX(-${offset}%)`;
-        
-        // Mettre à jour les classes active des slides
-        const slides = document.querySelectorAll('.circle-carousel-slide');
-        slides.forEach((slide, index) => {
-            if (index >= currentIndex && index < currentIndex + itemsPerView) {
-                slide.classList.add('active');
-            } else {
-                slide.classList.remove('active');
-            }
-        });
+        // Appliquer la transformation
+        carousel.style.transform = `translateX(-${offset}px)`;
     }
     
-    // Aller à un slide spécifique
-    function goToSlide(index) {
-        // S'assurer que l'index est dans les limites
-        currentIndex = Math.max(0, Math.min(index, totalItems - itemsPerView));
+    // Fonction pour passer à la slide suivante
+    function nextSlide() {
+        // Incrémenter l'index mais ne pas dépasser maxIndex
+        if (currentIndex < maxIndex) {
+            currentIndex++;
+        } else {
+            // Revenir au début quand on a atteint la fin
+            currentIndex = 0;
+        }
+        
         updateCarousel();
     }
     
-    // Aller au slide suivant
-    function nextSlide() {
-        if (currentIndex < totalItems - itemsPerView) {
-            currentIndex++;
-            updateCarousel();
-        } else {
-            // Revenir au début
-            currentIndex = 0;
-            updateCarousel();
-        }
-    }
-    
-    // Aller au slide précédent
-    function prevSlide() {
-        if (currentIndex > 0) {
-            currentIndex--;
-            updateCarousel();
-        } else {
-            // Aller à la fin
-            currentIndex = totalItems - itemsPerView;
-            updateCarousel();
-        }
-    }
-    
-    // Ajouter les écouteurs d'événements
-    function setupEventListeners() {
-        // Gestion du swipe sur mobile
-        let touchStartX = 0;
-        let touchEndX = 0;
-        
-        carousel.addEventListener('touchstart', (e) => {
-            touchStartX = e.changedTouches[0].screenX;
-            // Arrêter le défilement automatique lors du toucher
-            stopAutoScroll();
-        }, { passive: true });
-        
-        carousel.addEventListener('touchend', (e) => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-            // Redémarrer le défilement automatique après le toucher
-            startAutoScroll();
-        }, { passive: true });
-        
-        function handleSwipe() {
-            const swipeThreshold = 50;
-            if (touchEndX < touchStartX - swipeThreshold) {
-                // Swipe vers la gauche (suivant)
-                nextSlide();
-            } else if (touchEndX > touchStartX + swipeThreshold) {
-                // Swipe vers la droite (précédent)
-                prevSlide();
-            }
-        }
-        
-        // Ajuster le nombre d'éléments par vue lors du redimensionnement
-        window.addEventListener('resize', () => {
-            const newItemsPerView = window.innerWidth > 1200 ? 5 : window.innerWidth > 992 ? 4 : window.innerWidth > 768 ? 3 : window.innerWidth > 576 ? 2 : 1;
-            
-            if (newItemsPerView !== itemsPerView) {
-                itemsPerView = newItemsPerView;
-                goToSlide(currentIndex);
-            }
-        });
-        
-        // Arrêter le défilement automatique au survol
-        carousel.addEventListener('mouseenter', stopAutoScroll);
-        // Redémarrer le défilement automatique à la sortie du survol
-        carousel.addEventListener('mouseleave', startAutoScroll);
-    }
-    
-    // Défilement automatique
-    let autoScrollTimer;
-    let pixelPosition = 0;
-    const pixelScrollAmount = 20; // Décalage de 20px à chaque intervalle
-    
+    // Démarrer le défilement automatique
     function startAutoScroll() {
         // Arrêter tout timer existant avant d'en créer un nouveau
         stopAutoScroll();
         
-        // Créer un nouveau timer pour le défilement automatique avec décalage en pixels
         autoScrollTimer = setInterval(() => {
-            // Calculer la largeur totale d'une slide en pixels
-            const slideElement = carousel.querySelector('.circle-carousel-slide');
-            const slideWidth = slideElement ? slideElement.offsetWidth : 0;
-            
-            if (slideWidth > 0) {
-                // Ajouter le décalage progressif
-                pixelPosition += pixelScrollAmount;
-                
-                // Si on a atteint la largeur d'une slide, passer à la suivante
-                if (pixelPosition >= slideWidth) {
-                    pixelPosition = 0;
-                    // Passer à la slide suivante (basé sur l'index)
-                    nextSlide();
-                } else {
-                    // Calculer le pourcentage de décalage par rapport à la largeur totale
-                    const slideWidthPercent = 100 / itemsPerView;
-                    const pixelPercent = (pixelPosition / slideWidth) * slideWidthPercent;
-                    const totalOffset = (currentIndex * slideWidthPercent) + pixelPercent;
-                    
-                    // Appliquer la transformation en pourcentage pour éviter les problèmes d'unités
-                    carousel.style.transform = `translateX(-${totalOffset}%)`;
-                }
-            }
+            nextSlide();
         }, autoScrollInterval);
     }
     
+    // Arrêter le défilement automatique
     function stopAutoScroll() {
-        // Arrêter le timer existant
         if (autoScrollTimer) {
             clearInterval(autoScrollTimer);
         }
     }
     
-    // Initialiser le carrousel
+    // Initialisation du carrousel
     function initCarousel() {
         createSlides();
-        updateCarousel();
-        setupEventListeners();
-        // Démarrer le défilement automatique
         startAutoScroll();
     }
     
-    // Démarrer le carrousel
+    // Arrêter le défilement automatique lorsque l'utilisateur interagit avec le carrousel
+    carousel.addEventListener('mouseenter', stopAutoScroll);
+    carousel.addEventListener('mouseleave', startAutoScroll);
+    
+    // Initialiser le carrousel
     initCarousel();
 });
