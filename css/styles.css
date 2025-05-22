@@ -581,9 +581,7 @@ img {
     transition: var(--transition);
 }
 
-.person-card:hover {
-    transform: translateY(-10px);
-}
+
 
 .person-photo-container {
     width: 180px;
@@ -1608,6 +1606,7 @@ img {
     color: var(--dark-gray);
     padding: 60px 0 20px;
     box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.05);
+    gap: 12px;
 }
 
 .footer-white h3 {
@@ -1748,7 +1747,7 @@ img {
     transform: translateY(-3px);
 }
 
-.footer ul, .footer-bleu ul {
+.footer ul, .footer-bleu ul, .footer-white ul {
     list-style: none;
     padding: 0;
     margin: 0;
