@@ -51,9 +51,9 @@ document.addEventListener('DOMContentLoaded', function() {
         "avantages": "Les principaux avantages d'everUP sont : centralisation de la communication, réduction des emails internes, amélioration de l'engagement des collaborateurs, et accès à des données analytiques pour mesurer l'impact de vos actions.",
         
         // Informations sur les tarifs et offres
-        "quels sont vos tarifs": "Nous proposons plusieurs formules adaptées à la taille de votre entreprise. Notre formule de base commence à 9€ par utilisateur et par mois. Pour un devis personnalisé, vous pouvez prendre rendez-vous avec notre équipe commerciale.",
-        "prix": "Nos tarifs sont adaptés à la taille de votre organisation : Formule Startup (jusqu'à 50 utilisateurs) à 9€/utilisateur/mois, Formule Business (jusqu'à 250 utilisateurs) à 7€/utilisateur/mois, et Formule Enterprise (plus de 250 utilisateurs) avec tarif personnalisé.",
-        "offres": "Toutes nos offres incluent la mise en place de la plateforme, la formation des administrateurs, et un support technique. La formule Enterprise inclut également un accompagnement personnalisé et des fonctionnalités avancées d'analyse.",
+        "quels sont vos tarifs": "Découvrez nos solutions personnalisées qui s'adaptent parfaitement à vos besoins ! Pour obtenir une proposition sur mesure et sans engagement, prenez rendez-vous dès maintenant avec Christophe qui saura vous proposer l'offre idéale pour votre organisation.",
+        "prix": "Investir dans everUP, c'est investir dans la performance de votre organisation ! Pour connaître nos tarifs adaptés à votre contexte spécifique, réservez un échange privilégié avec Christophe. Il vous présentera une solution optimisée pour votre budget avec un retour sur investissement garanti.",
+        "offres": "Chez everUP, nous vous accompagnons de A à Z ! Installation, formation, support technique... tout est inclus pour vous garantir une expérience optimale. Pour découvrir l'ensemble des avantages et services inclus dans nos offres, échangez directement avec Christophe qui vous guidera vers la meilleure solution.",
         
         // Informations sur les services et l'entreprise
         "puis-je avoir une démo": "Bien sûr ! Vous pouvez réserver une démo gratuite de 30 minutes avec l'un de nos experts en cliquant sur le bouton 'Réservez une démo' en haut de la page ou en vous rendant sur la page Contact.",
