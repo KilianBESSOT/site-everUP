@@ -8,7 +8,7 @@
 }
 
 .circle-carousel-container.fullwidth {
-    max-width: 1040px; /* 1000px + 20px padding de chaque côté */
+    max-width: 1025px; 
     width: 100%;
     padding: 0;
     margin: 0 auto;
@@ -76,7 +76,47 @@
     font-size: 16px;
 }
 
-/* Boutons de navigation masqués */
+/* Boutons de navigation */
+.circle-carousel-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 100;
+    opacity: 0.7;
+    transition: opacity 0.3s ease, background-color 0.3s ease;
+}
+
+.circle-carousel-nav:hover {
+    opacity: 1;
+    background-color: var(--primary-color);
+}
+
+.circle-carousel-nav.prev {
+    left: 0;
+}
+
+.circle-carousel-nav.next {
+    right: 0;
+}
+
+/* Styles pour les boutons dans la section gallery */
+.gallery-section .container {
+    position: relative;
+    padding: 0 50px; /* Ajouter un padding pour laisser de la place aux boutons */
+}
+
+/* Anciens boutons de navigation masqués */
 .circle-nav-btn {
     display: none;
 }
